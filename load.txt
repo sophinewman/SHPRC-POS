@@ -1,0 +1,4 @@
+.separator ,
+.import bulk-data/category.csv Category
+.import bulk-data/product.csv Product
+Insert into PTestSubsidy values (-425);

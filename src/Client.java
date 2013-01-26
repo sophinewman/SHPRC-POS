@@ -2,7 +2,7 @@
 public class Client {
 
 	private int suid;
-	private boolean pregnancyTest;
+	private boolean pregnancyTestUsed;
 	private int credit;
 	
 	public Client() {
@@ -26,15 +26,15 @@ public class Client {
 	/**
 	 * @return the pregnancyTest
 	 */
-	public boolean isPregnancyTest() {
-		return pregnancyTest;
+	public boolean isPregnancyTestUsed() {
+		return pregnancyTestUsed;
 	}
 
 	/**
 	 * @param pregnancyTest the pregnancyTest to set
 	 */
-	public void setPregnancyTest(boolean pregnancyTest) {
-		this.pregnancyTest = pregnancyTest;
+	public void setPregnancyTestUsed(boolean pregnancyTestUsed) {
+		this.pregnancyTestUsed = pregnancyTestUsed;
 	}
 
 	/**

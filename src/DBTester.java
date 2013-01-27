@@ -17,7 +17,7 @@ public class DBTester {
 		Connection connection = null;
 		try
 		{
-			connection = DriverManager.getConnection("jdbc:sqlite:/Users/sophi/Documents/Workspace/SHPRC-POS/SHPRC-POS-GIT/toy.db");
+			connection = DriverManager.getConnection("jdbc:sqlite:/Users/sophi/Documents/Workspace/SHPRC-POS/toy.db");
 			Statement statement = connection.createStatement();
 			statement.setQueryTimeout(30); //timeout is set to 30 seconds
 

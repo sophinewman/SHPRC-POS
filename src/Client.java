@@ -5,10 +5,17 @@ public class Client {
 	private boolean pregnancyTestUsed;
 	private int credit;
 	
-	public Client() {
-		// TODO Auto-generated constructor stub
+	public Client(int suid, boolean pregnancyTestUsed, int credit) {
+		this.suid = suid;
+		this.pregnancyTestUsed = pregnancyTestUsed;
+		this.credit= credit;
 	}
 
+	
+	public boolean equals(Client client) {
+		return (client.getSuid() == suid);
+	}
+	
 	/**
 	 * @return the suid
 	 */
@@ -16,12 +23,7 @@ public class Client {
 		return suid;
 	}
 
-	/**
-	 * @param suid the suid to set
-	 */
-	public void setSuid(int suid) {
-		this.suid = suid;
-	}
+
 
 	/**
 	 * @return the pregnancyTest

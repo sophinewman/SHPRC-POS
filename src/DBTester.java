@@ -22,7 +22,7 @@ public class DBTester {
 			statement.setQueryTimeout(30); //timeout is set to 30 seconds
 
 			statement.executeUpdate("insert into Alphabet values('F')");
-			ResultSet rs = statement.executeQuery("select * from ALphabet");
+			ResultSet rs = statement.executeQuery("select distinct * from ALphabet");
 			while(rs.next()) {
 				System.out.println("Letter: " + rs.getString("letter"));
 			}

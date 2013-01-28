@@ -1,3 +1,9 @@
+create table Affiliation (
+	affiliationID INT PRIMARY KEY,
+	affiliationName TEXT,
+	affiliationCredit INT;
+);
+
 create table Category (
 	categoryID INT PRIMARY KEY,
 	categoryName TEXT,
@@ -30,9 +36,9 @@ create table PurchasedProduct (
 create table Client (
 	SUID INT PRIMARY KEY,
 	creditAvailable INT,
-	pregnancyTest INT
+	pregnancyTestUsed INT
 );
 
 create table PTestSubsidy (
-	AMOUNT INT
+	amount INT
 );

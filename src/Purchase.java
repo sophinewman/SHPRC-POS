@@ -5,41 +5,45 @@ import java.util.HashMap;
 public class Purchase {
 	
 	private static final int SUBTOTAL = 0, CREDIT = 1, PT_SUBSIDY = 2, TOTAL = 3;
+	/* total stores the subtotal, credit used, preg. test subsidy, and total of an order */
+	private int[] totals = {0,0,0,0};
 	
-	/* currentClient stores the client whose purchase is being tallied */
+	/* currentSUID stores the SUID of whose purchase is being tallied */
 	private Client currentClient;
+	
+	 
+	/* boolean that indicates whether a pregnancy test subsidy has been used in purchase */
+	//private boolean subsidyUsed;
+	//Not sure I need this
+	
 	
 	/* products stores the products and their quantities in a given purchase */
 	private HashMap<Product, Integer> products; 
 	
-	/* total stores the subtotal, credit used, preg. test subsidy, and total of an order */
-	private int[] totals = {0,0,0,0};
+	/* allows for lookup of global/backend data */
+	private RuntimeDatabase rDB;
 	
-	/* boolean that indicates whether pregnancy test subsidies should be applied */
-	private boolean subsidyActive; // will be passed in to constructor by the caller
 	
-	public Purchase (Client client, boolean subsidyActive) {
-		this.subsidyActive = subsidyActive;
-		if (currentClient != null) {
-			setCurrentClient(client);
-		}
-		if (this.subsidyActive) {
-			totals[PT_SUBSIDY] = -400; //TODO replace magic # with db query!
-			//select * from PregnancyTest - 0 when subsidy is toggled, price of pregnancy test when it's not.
-			//THIS DOESN'T BELONG HERE!
-		}
+	//New Purchase will be constructed at launch or immediately following submission of last
+	public Purchase (RuntimeDatabase rDB) {
+		this.rDB = rDB;
+		
 	}
 
 
 	/**
-	 * @param currentClient the currentClient to set
+	 * @param currentSUID the SUID to set
+	 * @param affiliationID the class or community affiliation the client belongs to
+	 * TODO allow for those with certain combinations to opt out of SUID
 	 */
-	public void setCurrentClient(Client currentClient) {
-		this.currentClient = currentClient;
-		if (this.currentClient != null) { //TODO do I need this check?
-			totals[CREDIT] = this.currentClient.getCredit();
+	public void setCurrentClient(int suid, int affiliationID) {
+		currentClient = rDB.lookupClient(suid);
+		if (currentClient == null) {
+			int[] credits = rDB.lookupAffiliationCredits(affiliationID);
+			currentClient = new Client(suid, credits[0], credits[1]);
 		}
 	}
+	
 	
 	/**
 	 *  @param product the product to be added to a purchase
@@ -77,6 +81,7 @@ public class Purchase {
 	/**
 	 * 
 	 * @return the total cost of a purchase after credits and subsidies
+	 * TODO: this is currently incorrect. needs to have some "apply subsidies" rule.
 	 */
 	public int getPurchaseTotal() {
 		int total = 0;

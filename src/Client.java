@@ -2,55 +2,37 @@
 public class Client {
 
 	private int suid;
-	private boolean pregnancyTestUsed;
-	private int credit;
+	private int affiliationID;
+	private int creditAvailable;
+	private boolean pregnancyTestAvailable;
 	
-	public Client(int suid, boolean pregnancyTestUsed, int credit) {
+	
+	public Client(int suid, int creditAvailable, int pregnancyTestAvailable) {
 		this.suid = suid;
-		this.pregnancyTestUsed = pregnancyTestUsed;
-		this.credit= credit;
-	}
-
-	
-	public boolean equals(Client client) {
-		return (client.getSuid() == suid);
+		this.creditAvailable = creditAvailable;
+		this.pregnancyTestAvailable = pregnancyTestAvailable > 0 ? true: false;
 	}
 	
-	/**
-	 * @return the suid
-	 */
-	public int getSuid() {
-		return suid;
-	}
-
-
-
-	/**
-	 * @return the pregnancyTest
-	 */
-	public boolean isPregnancyTestUsed() {
-		return pregnancyTestUsed;
-	}
-
-	/**
-	 * @param pregnancyTest the pregnancyTest to set
-	 */
-	public void setPregnancyTestUsed(boolean pregnancyTestUsed) {
-		this.pregnancyTestUsed = pregnancyTestUsed;
-	}
-
-	/**
-	 * @return the credit
-	 */
+	
 	public int getCredit() {
-		return credit;
+		return creditAvailable;
 	}
-
-	/**
-	 * @param credit the credit to set
-	 */
+	
 	public void setCredit(int credit) {
-		this.credit = credit;
+		creditAvailable = credit;
 	}
+	
+	public int getAffiliation() {
+		return affiliationID;
+	}
+	
+	public boolean isPTAvailable() {
+		return pregnancyTestAvailable;
+	}
+	
+	public void setPTAvailability(boolean availability) {
+		pregnancyTestAvailable = availability;
+	}
+	
 
 }

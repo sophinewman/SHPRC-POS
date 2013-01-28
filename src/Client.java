@@ -13,6 +13,9 @@ public class Client {
 		this.pregnancyTestAvailable = pregnancyTestAvailable > 0 ? true: false;
 	}
 	
+	public int getSUID() {
+		return suid;
+	}
 	
 	public int getCredit() {
 		return creditAvailable;
@@ -26,11 +29,11 @@ public class Client {
 		return affiliationID;
 	}
 	
-	public boolean isPTAvailable() {
+	public boolean pregnancyTestAvailable() {
 		return pregnancyTestAvailable;
 	}
 	
-	public void setPTAvailability(boolean availability) {
+	public void setPregnancyTestAvailable(boolean availability) {
 		pregnancyTestAvailable = availability;
 	}
 	

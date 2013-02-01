@@ -1,7 +1,8 @@
 create table Affiliation (
 	affiliationID INT PRIMARY KEY,
 	affiliationName TEXT,
-	affiliationCredit INT;
+	affiliationCredit INT,
+	qualifiesForSubsidy BOOLEAN
 );
 
 create table Category (
@@ -15,6 +16,7 @@ create table Product (
 	productName TEXT,
 	price INT,
 	cost INT,
+	isPregnancyTest BOOLEAN,
 	categoryID INT REFERENCES Category
 );
 
@@ -36,9 +38,6 @@ create table PurchasedProduct (
 create table Client (
 	SUID INT PRIMARY KEY,
 	creditAvailable INT,
-	pregnancyTestUsed INT
-);
-
-create table PTestSubsidy (
-	amount INT
+	pregnancyTestUsed BOOLEAN,
+	affiliationID INT REFERENCES Affiliation
 );

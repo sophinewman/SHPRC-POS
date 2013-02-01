@@ -4,13 +4,17 @@ public class Client {
 	private int suid;
 	private int affiliationID;
 	private int creditAvailable;
-	private boolean pregnancyTestAvailable;
+	private boolean pregnancyTestUsed;
+	private boolean qualifiesForPregnancyTest;
 	
 	
-	public Client(int suid, int creditAvailable, int pregnancyTestAvailable) {
+	public Client(int suid, int affiliationID, int creditAvailable, boolean pregnancyTestUsed,
+					boolean qualifiesForPregnancyTest) {
 		this.suid = suid;
+		this.affiliationID = affiliationID;
 		this.creditAvailable = creditAvailable;
-		this.pregnancyTestAvailable = pregnancyTestAvailable > 0 ? true: false;
+		this.pregnancyTestUsed = pregnancyTestUsed;
+		this.qualifiesForPregnancyTest = qualifiesForPregnancyTest;
 	}
 	
 	public int getSUID() {
@@ -30,11 +34,7 @@ public class Client {
 	}
 	
 	public boolean pregnancyTestAvailable() {
-		return pregnancyTestAvailable;
-	}
-	
-	public void setPregnancyTestAvailable(boolean availability) {
-		pregnancyTestAvailable = availability;
+		return qualifiesForPregnancyTest && !pregnancyTestUsed;
 	}
 	
 

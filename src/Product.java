@@ -53,5 +53,9 @@ public class Product {
 	public String getName() {
 		return name;
 	}
+	
+	public String toString() {
+		return "Name: " + name + " Category ID: " + categoryID + " Price: "+ price;
+	}
 
 }

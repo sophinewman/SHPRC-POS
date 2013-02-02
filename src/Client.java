@@ -43,6 +43,10 @@ public class Client {
 		this.qualifiesForPregnancyTest = qualifiesForPregnancyTest;
 	}
 
+	public String toString() {
+		return "SUID: " + suid + " Affiliation: " + affiliationID + " Credit Available: " + 
+			creditAvailable + " PT Redeemed: " + pregnancyTestRedeemed + " qualifies for PT: " + qualifiesForPregnancyTest;
+	}
 
 	/**
 	 * Returns the client's SUID number.

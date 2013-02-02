@@ -140,12 +140,12 @@ public class RuntimeDatabase {
 			// A PreparedStatement is used here to ensure that the SQL query is correctly formatted
 			// and to allow for more easily human-readable variable insertion.
 			PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM Client WHERE SUID = ?");
-			pstmt.setInt(0, SUID);
+			pstmt.setInt(1, SUID);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				int creditAvailable = rs.getInt("creditAvailable");
 				boolean pregnancyTestUsed = rs.getBoolean("pregnancyTestUsed");
-				int affiliationID = rs.getInt("affilitionID");
+				int affiliationID = rs.getInt("affiliationID");
 				boolean qualifiesForPregnancyTestSubsidy = qualifiesForPregnancyTestSubsidy(affiliationID);
 				Client client = 
 					new Client(SUID, affiliationID, creditAvailable, 
@@ -181,5 +181,9 @@ public class RuntimeDatabase {
 			return affiliationPregnancyTestSubsidy.get(affiliationID);
 		}
 		return false;
+	}
+	
+	public Product getProduct (int productID) {
+		return productMap.get(productID);
 	}
 }

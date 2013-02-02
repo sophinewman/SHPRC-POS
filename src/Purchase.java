@@ -24,6 +24,7 @@ public class Purchase {
 	//New Purchase will be constructed at launch or immediately following submission of last
 	public Purchase (RuntimeDatabase rDB) {
 		this.rDB = rDB;
+		products = new HashMap<Product, Integer>();
 
 	}
 
@@ -95,8 +96,11 @@ public class Purchase {
 	 */
 	public int tallyPurchaseTotal() {
 		totals[CREDIT] = calculateCredit();
+		System.out.println(totals[CREDIT]);
 		totals[PT_SUBSIDY] = applyPregnancyTestSubsidy();
+		System.out.println(totals[PT_SUBSIDY]);
 		int total = totals[SUBTOTAL] + totals[CREDIT] + totals[PT_SUBSIDY];
+		System.out.println(totals[SUBTOTAL]);
 		totals[TOTAL] = total;
 		return total;
 	}

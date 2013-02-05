@@ -5,7 +5,10 @@ public class RunnableTester {
 
 
 	/**
-	 * @param args
+	 * Runs some preliminary tests to verify that database intialization is
+	 * working successfully and that the Purchase and Client classes are
+	 * behaving as expected.
+	 * @param args not used.
 	 */
 	public static void main(String[] args) {
 		RuntimeDatabase rDB = null;
@@ -22,6 +25,17 @@ public class RunnableTester {
 			System.exit(1);
 		}
 
+		testPurchaseAndClient(rDB);
+
+		try {
+			rDB.closeDatabase();
+		}
+		catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	private static void testPurchaseAndClient(RuntimeDatabase rDB) {
 		System.out.println(rDB.getPregnancyTestProduct());
 
 		boolean print = rDB.qualifiesForPregnancyTestSubsidy(1000);
@@ -34,19 +48,12 @@ public class RunnableTester {
 		Product condom = rDB.getProduct(100);
 		purchase.addProduct(condom, 15);
 		int total = purchase.tallyPurchaseTotal();
-		System.out.println(total);
-		purchase.addProduct(condom, 30);
+		System.out.println("total for 15 condoms before client set: " + total);
+		purchase.addProduct(condom, 10);
 		purchase.setCurrentClient(5573646, sophi.getAffiliation());
 		total = purchase.tallyPurchaseTotal();
-		System.out.println(total);
+		System.out.println("total for 30 condoms after client set: " + total);
 		
-
-		try {
-			rDB.closeDatabase();
-		}
-		catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
 	}
 
 }

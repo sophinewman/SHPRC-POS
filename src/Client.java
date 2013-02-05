@@ -7,19 +7,19 @@ public class Client {
 
 	/*	The SUID of the client */
 	private int suid;  
-	
+
 	/* The class or community affiliation of the client. This number is internal
 	 * to SHPRC-POS and is not derived from any external or university-specified
 	 * affiliation ID system. */
 	private int affiliationID; 
-	
+
 	/* The amount of credit available to the client. Credit is always stored as
 	 * an integer representing the US Dollar cents to be added to a purchase total
 	 * and is therefore always negative, e.g., a student who has $2 to spend will
 	 * have -200 creditAvailable. */
 	private int creditAvailable;
-	
-	
+
+
 	private boolean pregnancyTestRedeemed;
 	private boolean qualifiesForPregnancyTest;
 
@@ -43,10 +43,16 @@ public class Client {
 		this.qualifiesForPregnancyTest = qualifiesForPregnancyTest;
 	}
 
+	
+	/**
+	 * Intended only for debugging.
+	 */
+	@Override 
 	public String toString() {
 		return "SUID: " + suid + " Affiliation: " + affiliationID + " Credit Available: " + 
-			creditAvailable + " PT Redeemed: " + pregnancyTestRedeemed + " qualifies for PT: " + qualifiesForPregnancyTest;
+		creditAvailable + " PT Redeemed: " + pregnancyTestRedeemed + " qualifies for PT: " + qualifiesForPregnancyTest;
 	}
+
 
 	/**
 	 * Returns the client's SUID number.

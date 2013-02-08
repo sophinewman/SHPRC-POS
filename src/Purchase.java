@@ -5,7 +5,7 @@ import java.util.HashMap;
  * SHPRC-POS
  * Purchase.java
  * Stores information about a purchase, calculating totals based on the specified products
- * and the current client.
+ * and the current client. Purchase is the Model in the MVC framework.
  * 
  * @author Sophi Newman
  * @version 0.1 2/4/13
@@ -30,7 +30,10 @@ public class Purchase {
 	private RuntimeDatabase rDB;
 
 
-	//New Purchase will be constructed at launch or immediately following submission of last
+	/**
+	 * Class constructor.
+	 * @param rDB the RuntimeDatabase the Purchase will access.
+	 */
 	public Purchase (RuntimeDatabase rDB) {
 		this.rDB = rDB;
 		products = new HashMap<Product, Integer>();

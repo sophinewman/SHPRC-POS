@@ -52,7 +52,10 @@ public class RunnableTester {
 		purchase.addProduct(condom, 10);
 		purchase.setCurrentClient(5573646, sophi.getAffiliation());
 		total = purchase.tallyPurchaseTotal();
-		System.out.println("total for 30 condoms after client set: " + total);
+		System.out.println("total for 10 condoms after client set: " + total);
+		purchase.setCurrentClient(5573666, 1006);
+		total = purchase.tallyPurchaseTotal();
+		System.out.println("total for 10 condoms after new client set: " + total);
 		
 	}
 

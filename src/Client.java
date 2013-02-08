@@ -1,8 +1,13 @@
 
 /**
+ * SHPRC-POS
+ * Client.java
+ * Stores information about a client.
+ * 
  * @author Sophi Newman
- *
+ * @version 0.1 2/8/13
  */
+
 public class Client {
 
 	/*	The SUID of the client */
@@ -19,8 +24,15 @@ public class Client {
 	 * have -200 creditAvailable. */
 	private int creditAvailable;
 
-
+	/* The following two booleans store information that determines whether or not
+	 * a client is eligible to receive a free pregnancy test. Whether the test has 
+	 * been used and whether the client qualifies must be stored separately to allow
+	 * for administrative changes mid-quarter. */
+	 
+	/* Whether this client has already received one free pregnancy test this quarter. */
 	private boolean pregnancyTestRedeemed;
+
+	/* Whether the client qualifies for a free pregnancy test. */
 	private boolean qualifiesForPregnancyTest;
 
 
@@ -43,9 +55,10 @@ public class Client {
 		this.qualifiesForPregnancyTest = qualifiesForPregnancyTest;
 	}
 
-	
+
 	/**
 	 * Intended only for debugging.
+	 * @return the string representation of a Client.
 	 */
 	@Override 
 	public String toString() {

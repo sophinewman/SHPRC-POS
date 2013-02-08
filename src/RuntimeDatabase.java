@@ -6,6 +6,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
+/**
+ * SHPRC-POS
+ * RuntimeDatabase.java
+ * Stores back end information to be retrieved by the Purchase (Model in MVC
+ * class) at runtime. Because the amount of data in the back end is small and
+ * largely read-only, runtime structures allow greater efficiency than directly
+ * querying the back end.
+ * 
+ * @author Sophi Newman
+ * @version 0.1 2/8/13
+ */
 public class RuntimeDatabase {
 
 	/* The JDBC Connection that backs the class */
@@ -16,13 +27,22 @@ public class RuntimeDatabase {
 	private HashMap<Integer, Product> productMap;
 	private Product pregnancyTest;
 
+	/**
+	 * Class constructor. Does not actually read in data and store it;
+	 * instead, it ensures that the JDBC Class is successfully loaded.
+	 * @throws ClassNotFoundException
+	 */
 	public RuntimeDatabase() throws ClassNotFoundException {
-		//PUT THE CONSTRUCTOR IN A TRY-CATCH BLOCK! - first declare and then allocate in try catch
-		// load the JDBC Driver with the class loader
 		Class.forName("org.sqlite.JDBC");
 
 	}
 
+	/**
+	 * Initializes the JDBC connection to the database and loads up the
+	 * runtime data structures. Returns false if any of these initializations
+	 * fail.
+	 * @return successfully initialized
+	 */
 	public boolean initRuntimeDatabase() {
 		try {		
 			connection = 
@@ -45,14 +65,10 @@ public class RuntimeDatabase {
 
 
 	/**
+	 * Closes the Connection object that underpins the RuntimeDatabase class.
 	 * @throws SQLException
 	 */
-	/* Method: closeDatabase
-	 * ---------------------
-	 * Closes the Connection object that underpins the RuntimeDatabase class.
-	 */
 	public void closeDatabase() throws SQLException {
-		// CALL THIS IN A TRY CATCH BLOCK
 		try {
 			if (connection != null)
 				connection.close();
@@ -63,15 +79,20 @@ public class RuntimeDatabase {
 	}
 
 
+	/**
+	 * Queries the database for the Product table and stores the ResultSet
+	 * in the productMap HashMap from ProductID to Product. Also stores the
+	 * Pregnancy Test object in the pregnancyTest instance variable.
+	 * @return successfully initialized
+	 */
 	private boolean initializeProductMap() {
 		productMap = new HashMap<Integer, Product>();
 		try {
 			Statement stmt = connection.createStatement();
 			// Return all rows in the Product relation
 			ResultSet rs = stmt.executeQuery(("SELECT * FROM Product"));
-			
 			// Read in the information about each row and store in Product object
-			// Stores the flagged pregnancy test product in an instance variable
+			// Store the flagged pregnancy test product in an instance variable
 			while (rs.next()) {
 				// Fetching row information
 				int productID = rs.getInt("productID");
@@ -85,7 +106,7 @@ public class RuntimeDatabase {
 				if (isPregnancyTest) {
 					pregnancyTest = product;
 				}
-				// Adds product to map of all products
+				// Add product to map of all products
 				productMap.put(productID, product);
 			}
 		} 
@@ -97,10 +118,11 @@ public class RuntimeDatabase {
 	}
 
 
-	/* Method: initializeAffiliationMaps
-	 * ---------------------------------
-	 * Reads in the Affiliation relation and creates two local data structures
-	 * that will store information about what a given affiliaton qualifies for.
+	/**
+	 * Reads in the Affiliation relation and populates two local data structures
+	 * that store what amount of credit and what pregnancy test subsidy a given
+	 * affiliation qualifies for.
+	 * @return successfully initialized
 	 */
 	private boolean initializeAffiliationMaps() {
 		affiliationCreditMap = new HashMap<Integer, Integer>();
@@ -126,19 +148,16 @@ public class RuntimeDatabase {
 
 
 	/**
-	 * @param SUID
-	 * @return a client object retrieved from the database, if it exists
-	 */
-	/* Method: lookupClient
-	 * --------------------
 	 * Tests to see if the specified client exists in the client database. If so,
 	 * the corresponding client object is created and returned to the user. If a
 	 * client is not in the database, lookupClient returns null.
+	 * @param SUID
+	 * @return a client object retrieved from the database, if it exists
 	 */
 	public Client lookupClient(int SUID) {
 		try {
-			// A PreparedStatement is used here to ensure that the SQL query is correctly formatted
-			// and to allow for more easily human-readable variable insertion.
+			/* A PreparedStatement is used here to ensure that the SQL query is correctly formatted
+			 and to allow for more easily human-readable variable insertion. */
 			PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM Client WHERE SUID = ?");
 			pstmt.setInt(1, SUID);
 			ResultSet rs = pstmt.executeQuery();
@@ -161,7 +180,8 @@ public class RuntimeDatabase {
 
 
 	/**
-	 * @param affiliationID
+	 * Returns the credit a given affiliation has as a negative integer of cents.
+	 * @param affiliationID the integer community/class affiliation ID to be looked up.
 	 * @return the amount of credit a given affiliation receives
 	 */
 	public int getCredit(int affiliationID) {
@@ -171,11 +191,21 @@ public class RuntimeDatabase {
 		return 0;
 	}
 
+	
+	/**
+	 * Returns the product that the administrator has specified to be the pregnancy test.
+	 * @return the pregnancy test Product object
+	 */
 	public Product getPregnancyTestProduct() {
 		return pregnancyTest;
 	}
 
-
+	
+	/**
+	 * Returns whether a given affiliation qualifies for a free pregnancy test.
+	 * @param affiliationID the integer community/class affiliation ID to be looked up.
+	 * @return whether the affiliation qualifies for a free pregnancy test
+	 */
 	public boolean qualifiesForPregnancyTestSubsidy(int affiliationID) {
 		if (affiliationPregnancyTestSubsidy.containsKey(affiliationID)) {
 			return affiliationPregnancyTestSubsidy.get(affiliationID);
@@ -183,6 +213,12 @@ public class RuntimeDatabase {
 		return false;
 	}
 	
+	
+	/**
+	 * Returns the product associated with the specified productID.
+	 * @param productID the unique integer product ID to be looked up
+	 * @return the product associated with the specified productID
+	 */
 	public Product getProduct (int productID) {
 		return productMap.get(productID);
 	}
